@@ -1,27 +1,43 @@
-#!/bin/bash -x
+#!/usr/local/bin/bash 
+
+read -p "Enter a Number to Limit the Simulation : " input
 
 #CONSTANTS
 IS_HEAD=1
 IS_TAIL=0
 
-read -p "Enter the Number to limit the simulation : " input
-
 #VARIABLES
 count=0
-HEADCount=0
-TAILCount=0
+HEADcount=0
+TAILcount=0
 
-while(($count!=$input))
+declare -A CounterDictionary
+
+while(($HEADcount<22 && $TAILcount<22 && $count<$input))
 do
 	result=$((RANDOM%2))
 	if [[ $result -eq $IS_HEAD ]]
 	then
-		((HEADCount++))
+		CounterDictionary[H]=$((HEADcount++))
 	else
-		((TAILCount++))
+		CounterDictionary[T]=$((TAILcount++))
 	fi
 	((count++))
 done
 
-echo HEAD COUNT = $HEADCount 
-echo TAIL COUNT = $TAILCount
+if(($HEADcount<TAILcount))
+then
+	echo  TAIL WON BY  $((TAILCount-HEADcount))
+elif((TAILcount<HEADcount))
+then
+	echo HEAD WON BY $((HEADCount-TAILcount))
+else
+	echo ITS A TIE
+fi
+
+
+
+
+
+echo HEAD COUNT = $HEADcount 
+echo TAIL COUNT = $TAILcount
